@@ -114,13 +114,25 @@ public class StrIntHashMap extends MapADT<String, Integer> {
 	//// start:put
 	@Override
 	public void put(String key, @Nonnull Integer value) {
-			// 1. Calculate which bucket contains our key.
-			// 2. Get the list of entries in that bucket:
-			// 3. Search the list for the pair we want:
+		
+		// 1. Calculate which bucket contains our key.
+		int buck = whichBucket(key);
+		// 2. Get the list of entries in that bucket:
+		EntryNode start = this.buckets.getIndex(buck);
+		// 3. Search the list for the pair we want:
+		for (EntryNode i = start; i != null; i = i.next ) {
 			// 3.a. If found, update the node and leave this method early.
-			// 3.b. If not found, add our key, value to the front of this list! O(1).
-			// 4. Need to update our sizes manually! (and call maybeGrow)
-			throw new TODOErr();
+			if (i.matches(key)) {
+				i.value = value;
+				return;
+			}
+		}
+		// 3.b. If not found, add our key, value to the front of this list! O(1).
+		EntryNode add = new EntryNode(key, value, start);
+		this.buckets.setIndex(buck, add);
+		
+		// 4. Need to update our sizes manually! (and call maybeGrow)
+		this.size += 1;
 
 	}
 	//// end
@@ -133,11 +145,18 @@ public class StrIntHashMap extends MapADT<String, Integer> {
 	@Nullable
 	public Integer get(String key) {
 		// 1. Calculate which bucket contains our key.
+		int buck = whichBucket(key);
 		// 2. Get the list of entries in that bucket:
+		EntryNode start = this.buckets.getIndex(buck);
 		// 3. Search the list for the pair we want:
+		for (EntryNode i = start; i != null; i = i.next ) {
 		// 3.a. If we find it, return the value being stored!
-		// 3.b. If we don't find it, return null!
-		throw new TODOErr();
+			if (i.matches(key)) {
+				return i.value;
+			} 
+			
+		}
+		return null;
 	}
 	//// end
 

@@ -178,8 +178,22 @@ public class IntBST {
 		 * @return an integer greater than or equal to 1.
 		 */
 		public int getHeight() {
-			throw new TODOErr();
+			
+			if (this.left != null) {
+				return this.left.getHeight() + 1;
+			}
+			
+			if (this.right != null) {
+				return this.right.getHeight() + 1;
+			}
+			
+			return 1;
+			
+			
 		}
+			
+			
+		
 		//// end
 
 		/**
@@ -232,7 +246,17 @@ public class IntBST {
 		 * @param output - a list.
 		 */
 		public void addToSortedList(List<Integer> output) {
-			throw new TODOErr();
+			
+			if (this.left != null) {
+				this.left.addToSortedList(output);
+			}
+			output.add(this.value);
+			
+			if (this.right != null) {
+				this.right.addToSortedList(output);
+			}
+			
+			
 		}
 		//// end
 
@@ -296,7 +320,26 @@ public class IntBST {
 		 * @return true if found, false if not found.
 		 */
 		public boolean contains(int value) {
-			throw new TODOErr();
+			if (this.value == value) {
+				return true;
+			}
+			
+			//How do i know to go left or right?
+			
+			if (this.value < value) {
+				if (this.right == null) {
+					return false;
+				}
+				return this.right.contains(value);
+			} else if (this.value > value) {
+				if (this.left == null) {
+					return false;
+				}
+				return this.left.contains(value);
+			}
+			
+			return false;
+			
 		}
 		//// end
 
